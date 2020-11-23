@@ -14,10 +14,10 @@ public class CrawlerPage1 {
         WebDriver driver = null;
         try {
             // init driver
-            //            System.setProperty("webdriver.gecko.driver", "/home/le/seleniumdriver/geckodriver");
+            // System.setProperty("webdriver.gecko.driver", "/home/le/seleniumdriver/geckodriver");
             FirefoxOptions option = new FirefoxOptions();
             option.addArguments("--headless");
-            //            driver = new FirefoxDriver(option);
+            // driver = new FirefoxDriver(option);
 
             System.setProperty("webdriver.chrome.driver", "/home/le/seleniumdriver/chromedriver");
             ChromeOptions op = new ChromeOptions();
@@ -32,6 +32,14 @@ public class CrawlerPage1 {
             // process data
             List<WebElement> vongBangs = driver.findElements(By.className("OcbAbf"));
             String tenVongBang = "";
+            String avatarDoiBong = "";
+            String tenDoi = "";
+            String banThang = "";
+            String ketQua = "";
+            String ngayDa = "";
+            String linkAnhXemTruoc = "";
+            String linkVideo = "";
+            String thoiGianVideo = "";
             Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
             // Lap tung vong bang
             for (WebElement webElement : vongBangs) {
@@ -39,12 +47,46 @@ public class CrawlerPage1 {
                         .findElement(
                                 By.cssSelector("div[class='lr-imso-scroll GVj7ae imso-medium-font qJnhT imso-ani']"))
                         .getText();
+                System.out.println("Vong bang: " + tenVongBang);
                 // Tran dau trong vong bang
-                List<WebElement> tranDaus = webElement.findElements(By.cssSelector("div[class='imspo_mt__mit']"));
+                List<WebElement> tranDaus = webElement.findElements(By.cssSelector("table[class='imspo_mt__mit']"));
+                int index = 0;
                 for (WebElement tranDau : tranDaus) {
-                    tranDau.findElements(By.cssSelector("div[class='imspo_mt__mit'"));
+                    System.out.println("Tran dau: " + ++index);
+                    List<WebElement> dois = tranDau.findElements(By.cssSelector("tr[class='imspo_mt__tr']"));
+                    for (WebElement doi : dois) {
+                        avatarDoiBong = doi.findElement(By.cssSelector("td.imspo_mt__lgc > img.imso_btl__mh-logo"))
+                                .getAttribute("src");
+                        System.out.println("Src: " + avatarDoiBong);
+                        tenDoi = doi.findElement(By.cssSelector("div.ellipsisize > span")).getText();
+                        System.out.println("Ten doi: " + tenDoi);
+                        banThang = doi.findElement(By.cssSelector("div.imspo_mt__tt-w")).getText();
+                        System.out.println("Ban thang: " + banThang);
+                    }
+                    ketQua = tranDau.findElement(By.cssSelector(
+                            "div[class='imspo_mt__cm-s imspo_mt__ndl-p imso-medium-font imspo_mt__match-status']"))
+                            .getText();
+                    ngayDa = tranDau.findElement(By.cssSelector("div[class='imspo_mt__cmd'] > span")).getText();
+                    thoiGianVideo = tranDau
+                            .findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
+                            .findElement(By.cssSelector(" a > span"))
+                            .getText();
+                    linkAnhXemTruoc = tranDau
+                            .findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
+                            .findElement(By.cssSelector(" a > img"))
+                            .getAttribute("src");
+                    linkVideo = tranDau
+                            .findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
+                            .findElement(By.cssSelector("a"))
+                            .getAttribute("href");
+
+                    System.out.println("ketQua: " + ketQua);
+                    System.out.println("ngayDa: " + ngayDa);
+                    System.out.println("linkAnhXemTruoc: " + linkAnhXemTruoc);
+                    System.out.println("thoiGianVideo: " + thoiGianVideo);
+                    System.out.println("linkAnhXemTruoc: " + linkAnhXemTruoc);
+                    System.out.println("linkVideo: " + linkVideo);
                 }
-                break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +97,6 @@ public class CrawlerPage1 {
             }
         }
     }
-
 
     public void process() {
 
