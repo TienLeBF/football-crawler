@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Predicate;
@@ -30,21 +31,44 @@ public class CrawlerPage1 {
 			driver = new ChromeDriver(op);
 			// info crawl
 			String url = "https://www.google.com/search?sxsrf=ALeKk02SuH34OswVCiUwOVJjOM5dhEDXwQ%3A1605506341928&ei=JRWyX7KNOIaJmAWzn7eoBQ&q=africa+cup+2019&oq=afr&gs_lcp=CgZwc3ktYWIQARgAMgQIIxAnMgQIIxAnMgQIIxAnMgcIABDJAxBDMgQILhBDMgQIABBDMgQIABBDMgQIABBDMgIIADICCAA6BwgjEMkDECc6BwguELEDEEM6CAgAELEDEIMBOg0ILhCxAxCDARAUEIcCOgoILhCxAxAUEIcCOgUIABCxA1C-C1i-C2DQEmgAcAB4AIABaYgBzwGSAQMwLjKYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=psy-ab#sie=lg;/m/0r3tvzw;2;/m/01l5zn;mt;fp;1;;";
-//            String url = "https://www.guru99.com/scroll-up-down-selenium-webdriver.html";
+            // String url = "https://www.guru99.com/scroll-up-down-selenium-webdriver.html";
+//			String url = "file:///home/le/Desktop/test.html";
 			// driver get url
 			driver.manage().window().maximize();
 			driver.get(url);
 //			SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(driver);
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-			Thread.sleep(10000);
-			js.executeScript("scroll(0, 500)", "");
-//			js.executeScript("window.scrollTo(0, document.body.scrollHeight)");	
 			Thread.sleep(5000);
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("document.querySelector('div[style*=\"position: fixed; top: 0px; left: 0px; width: 100%; z-index: 1;\"]').style.width = '50%';", "");
+			Thread.sleep(5000);
+			//js.executeScript("scroll(0, 500)", "");
+			//Find element by link text and store in variable "Element"        		
+	        try {
+	        	long start = System.currentTimeMillis();
+	    		int length = 0;
+	        	while (true) {
+		        	WebElement Element = driver.findElement(By.cssSelector("div[class*='imso-ani AA8jgb BOgFNb']"));
+
+			        //This will scroll the page till the element is found		
+			        js.executeScript("arguments[0].scrollIntoView();", Element);
+			        int current = driver.getPageSource().length();
+					if (length < current) {
+						length = current;
+					} else {
+						System.out.println(String.format("WAIT_LOAD_PAGE_COMPLETED = %d", (System.currentTimeMillis() - start)));
+						break;
+					}
+					Thread.sleep(1000);
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+			}        
+//			js.executeScript("window.scrollTo(0, document.body.scrollHeight)");	
+//			Thread.sleep(20000);
 //			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			//SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(driver, 5000);
 			// process data
-			
-			
+			// ouiajb GJO1Cf
 			List<WebElement> vongBangs = driver.findElements(By.className("OcbAbf"));
 			String tenVongBang = "";
 			String avatarDoiBong = "";
