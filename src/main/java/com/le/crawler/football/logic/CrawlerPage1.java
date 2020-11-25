@@ -46,10 +46,33 @@ public class CrawlerPage1 {
                 long start = System.currentTimeMillis();
                 int length = 0;
                 while (true) {
-                    WebElement Element = driver.findElement(By.cssSelector("div[class*='imso-ani AA8jgb BOgFNb']"));
+                    // This will scroll the page till the element is found
+                    WebElement xx = driver.findElement(By.id("liveresults-sports-immersive__updatable-league-matches"));
+                    System.out.println("ROLLING UP");
+                    js.executeScript("arguments[0].scrollIntoView();", xx);
+                    int current = driver.getPageSource().length();
+                    if (length < current) {
+                        length = current;
+                    } else {
+                        System.out.println(
+                                String.format("WAIT_LOAD_PAGE_COMPLETED = %d", (System.currentTimeMillis() - start)));
+                        break;
+                    }
+                    Thread.sleep(1000);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
+            try {
+                long start = System.currentTimeMillis();
+                int length = 0;
+                while (true) {
+                    // This will scroll the page till the element is found
+                    WebElement Element = driver.findElement(By.cssSelector("div[class*='imso-ani AA8jgb BOgFNb']"));
                     // This will scroll the page till the element is found
                     js.executeScript("arguments[0].scrollIntoView();", Element);
+                    System.out.println("ROLLING DOWN");
                     int current = driver.getPageSource().length();
                     if (length < current) {
                         length = current;
@@ -69,20 +92,22 @@ public class CrawlerPage1 {
             CricleMatch cricleMatch = new CricleMatch();
             List<CricleMatch> cricleMatchs = new ArrayList<CricleMatch>();
             // Lap tung vong bang
+            int index = 0;
             for (WebElement webElement : vongBangs) {
                 try {
                     String cricleMatchName = webElement
                             .findElement(By.cssSelector("div[class*='GVj7ae imso-medium-font qJnhT imso-ani']"))
                             .getText();
                     cricleMatch = new CricleMatch();
+                    index = 0;
                     cricleMatch.setName(cricleMatchName);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Khong the lay cricleMatch.setName");
+                    // e.printStackTrace();
                 }
                 // Tran dau trong vong bang
 
                 List<WebElement> tranDaus = webElement.findElements(By.cssSelector("table[class='imspo_mt__mit']"));
-                int index = 0;
                 for (WebElement tranDau : tranDaus) {
                     match = new Match();
                     System.out.println("Tran dau: " + ++index);

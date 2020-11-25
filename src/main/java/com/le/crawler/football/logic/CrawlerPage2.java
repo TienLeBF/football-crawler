@@ -37,18 +37,17 @@ public class CrawlerPage2 {
             driver.manage().window().maximize();
             driver.get(url);
             SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(driver, 1000);
-
             JavascriptExecutor js = (JavascriptExecutor) driver;
             // js.executeScript(
-            //             "document.querySelector('div[style*=\"position: fixed; top: 0px; left: 0px; width: 100%; z-index: 1;\"]').style.width = '50%';",
+            // "document.querySelector('div[style*=\"position: fixed; top: 0px; left: 0px; width: 100%; z-index:
+            // 1;\"]').style.width = '50%';",
             // "");
             try {
                 long start = System.currentTimeMillis();
                 int length = 0;
                 while (true) {
                     // This will scroll the page till the element is found
-                    WebElement xx = driver
-                            .findElement(By.id("liveresults-sports-immersive__updatable-league-matches"));
+                    WebElement xx = driver.findElement(By.id("liveresults-sports-immersive__updatable-league-matches"));
                     System.out.println("ROLLING UP");
                     js.executeScript("arguments[0].scrollIntoView();", xx);
                     int current = driver.getPageSource().length();
@@ -97,14 +96,13 @@ public class CrawlerPage2 {
             int index = 0;
             for (WebElement webElement : vongBangs) {
                 try {
-                    String cricleMatchName = webElement
-                            .findElement(By.cssSelector("div.ellipsisize > span"))
-                            .getText();
+                    String cricleMatchName = webElement.findElement(By.cssSelector("div.ellipsisize > span")).getText();
                     cricleMatch = new CricleMatch();
                     index = 0;
                     cricleMatch.setName(cricleMatchName);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Khong the lay cricleMatch.setName");
+                    // e.printStackTrace();
                 }
                 // Tran dau trong vong bang
 
@@ -145,7 +143,7 @@ public class CrawlerPage2 {
                                 tranDau.findElement(By.cssSelector("div[class='imspo_mt__cmd'] > span")).getText());
                     } catch (Exception e) {
                         System.out.println("Khong the lay setResult");
-                        //                      e.printStackTrace();
+                        // e.printStackTrace();
                     }
                     try {
                         match.setVideoTime(
@@ -153,7 +151,7 @@ public class CrawlerPage2 {
                                 .findElement(By.cssSelector(" a > span")).getText());
                     } catch (Exception e) {
                         System.out.println("Khong the lay setVideoTime");
-                        //                        e.printStackTrace();
+                        // e.printStackTrace();
                     }
                     try {
                         match.setPhotoUrlPreview(
@@ -161,7 +159,7 @@ public class CrawlerPage2 {
                                 .findElement(By.cssSelector(" a > img")).getAttribute("src"));
                     } catch (Exception e) {
                         System.out.println("Khong the lay setPhotoUrlPreview");
-                        //                        e.printStackTrace();
+                        // e.printStackTrace();
                     }
                     try {
                         match.setVideoUrl(
@@ -169,7 +167,7 @@ public class CrawlerPage2 {
                                 .findElement(By.cssSelector("a")).getAttribute("href"));
                     } catch (Exception e) {
                         System.out.println("Khong the lay setVideoUrl");
-                        //                        e.printStackTrace();
+                        // e.printStackTrace();
                     }
                     cricleMatch.getMatchs().add(match);
                 }
