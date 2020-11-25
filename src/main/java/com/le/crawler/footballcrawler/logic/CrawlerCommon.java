@@ -1,4 +1,4 @@
-package com.le.crawler.football.logic;
+package com.le.crawler.footballcrawler.logic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.google.gson.Gson;
-import com.le.crawler.football.modal.CricleMatch;
-import com.le.crawler.football.modal.Match;
-import com.le.crawler.football.modal.Team;
-import com.le.crawler.football.utils.SeleniumUtils;
+import com.le.crawler.footballcrawler.modal.CricleMatch;
+import com.le.crawler.footballcrawler.modal.Match;
+import com.le.crawler.footballcrawler.modal.Team;
+import com.le.crawler.footballcrawler.utils.SeleniumUtils;
 
 public class CrawlerCommon {
 

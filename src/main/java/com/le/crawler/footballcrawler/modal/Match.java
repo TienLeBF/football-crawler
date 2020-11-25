@@ -1,4 +1,4 @@
-package com.le.crawler.football.modal;
+package com.le.crawler.footballcrawler.modal;
 
 import java.util.ArrayList;
 import java.util.List;

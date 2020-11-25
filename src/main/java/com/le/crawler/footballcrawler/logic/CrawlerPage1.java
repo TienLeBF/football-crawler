@@ -1,4 +1,5 @@
-package com.le.crawler.football.logic;
+package com.le.crawler.footballcrawler.logic;
+
 
 public class CrawlerPage1 {
 
