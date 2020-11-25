@@ -18,7 +18,7 @@ import com.le.crawler.football.utils.SeleniumUtils;
 
 public class CrawlerCommon {
 
-    public static void process(String url) {
+    public static String process(String url) {
         // 1. vòng bảng - trong div id =
         // "liveresults-sports-immersive__updatable-league-matches" co class =
         // "OcbAbf"
@@ -173,11 +173,13 @@ public class CrawlerCommon {
                 }
                 cricleMatchs.add(cricleMatch);
             }
+
             Gson gson = new Gson();
             String json = gson.toJson(cricleMatchs);
-            System.out.println(json);
+            return json;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         } finally {
             if (null != driver) {
                 driver.close();
