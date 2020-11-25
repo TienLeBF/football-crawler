@@ -1,3 +1,4 @@
+package com.le.crawler.football.utils;
 import org.openqa.selenium.WebDriver;
 
 public class SeleniumUtils {

@@ -1,6 +1,7 @@
-import java.util.HashMap;
+package com.le.crawler.football.logic;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -9,6 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import com.google.gson.Gson;
+import com.le.crawler.football.modal.CricleMatch;
+import com.le.crawler.football.modal.Match;
+import com.le.crawler.football.modal.Team;
+import com.le.crawler.football.utils.SeleniumUtils;
+
 public class CrawlerPage1 {
     public static void main(String[] args) {
         WebDriver driver = null;
@@ -16,111 +23,98 @@ public class CrawlerPage1 {
             // init driver
             // System.setProperty("webdriver.gecko.driver",
             // "/home/le/seleniumdriver/geckodriver");
-            //			FirefoxOptions option = new FirefoxOptions();
-            //			option.addArguments("--headless");
+            // FirefoxOptions option = new FirefoxOptions();
+            // option.addArguments("--headless");
             // driver = new FirefoxDriver(option);
-
 
             System.setProperty("webdriver.chrome.driver", "/home/le/seleniumdriver/chromedriver");
             ChromeOptions op = new ChromeOptions();
-            //			op.addArguments("--headless");
+            // op.addArguments("--headless");
             driver = new ChromeDriver(op);
             // info crawl
             String url = "https://www.google.com/search?sxsrf=ALeKk02SuH34OswVCiUwOVJjOM5dhEDXwQ%3A1605506341928&ei=JRWyX7KNOIaJmAWzn7eoBQ&q=africa+cup+2019&oq=afr&gs_lcp=CgZwc3ktYWIQARgAMgQIIxAnMgQIIxAnMgQIIxAnMgcIABDJAxBDMgQILhBDMgQIABBDMgQIABBDMgQIABBDMgIIADICCAA6BwgjEMkDECc6BwguELEDEEM6CAgAELEDEIMBOg0ILhCxAxCDARAUEIcCOgoILhCxAxAUEIcCOgUIABCxA1C-C1i-C2DQEmgAcAB4AIABaYgBzwGSAQMwLjKYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=psy-ab#sie=lg;/m/0r3tvzw;2;/m/01l5zn;mt;fp;1;;";
-            // String url = "https://www.guru99.com/scroll-up-down-selenium-webdriver.html";
-            //			String url = "file:///home/le/Desktop/test.html";
             // driver get url
             driver.manage().window().maximize();
             driver.get(url);
-            //			SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(driver);
-            Thread.sleep(5000);
+            SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(driver, 1000);
             JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("document.querySelector('div[style*=\"position: fixed; top: 0px; left: 0px; width: 100%; z-index: 1;\"]').style.width = '50%';", "");
-            Thread.sleep(5000);
-            //js.executeScript("scroll(0, 500)", "");
-            //Find element by link text and store in variable "Element"
+            // js.executeScript(
+            // "document.querySelector('div[style*=\"position: fixed; top: 0px; left: 0px; width: 100%; z-index:
+            // 1;\"]').style.width = '50%';",
+            // "");
             try {
                 long start = System.currentTimeMillis();
                 int length = 0;
                 while (true) {
                     WebElement Element = driver.findElement(By.cssSelector("div[class*='imso-ani AA8jgb BOgFNb']"));
 
-                    //This will scroll the page till the element is found
+                    // This will scroll the page till the element is found
                     js.executeScript("arguments[0].scrollIntoView();", Element);
                     int current = driver.getPageSource().length();
                     if (length < current) {
                         length = current;
                     } else {
-                        System.out.println(String.format("WAIT_LOAD_PAGE_COMPLETED = %d", (System.currentTimeMillis() - start)));
+                        System.out.println(
+                                String.format("WAIT_LOAD_PAGE_COMPLETED = %d", (System.currentTimeMillis() - start)));
                         break;
                     }
                     Thread.sleep(1000);
                 }
             } catch (Exception e) {
-                // TODO: handle exception
+                e.printStackTrace();
             }
-            //			js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-            //			Thread.sleep(20000);
-            //			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            //SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(driver, 5000);
-            // process data
-            // ouiajb GJO1Cf
             List<WebElement> vongBangs = driver.findElements(By.className("OcbAbf"));
-            String tenVongBang = "";
-            String avatarDoiBong = "";
-            String tenDoi = "";
-            String banThang = "";
-            String ketQua = "";
-            String ngayDa = "";
-            String linkAnhXemTruoc = "";
-            String linkVideo = "";
-            String thoiGianVideo = "";
-            Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
+            Team team = new Team();
+            Match match = null;
+            CricleMatch cricleMatch = new CricleMatch();
+            List<CricleMatch> cricleMatchs = new ArrayList<CricleMatch>();
             // Lap tung vong bang
             for (WebElement webElement : vongBangs) {
                 try {
-                    tenVongBang = webElement
+                    String cricleMatchName = webElement
                             .findElement(By.cssSelector("div[class*='GVj7ae imso-medium-font qJnhT imso-ani']"))
                             .getText();
-                    System.out.println("Vong bang: " + tenVongBang);
+                    cricleMatch = new CricleMatch();
+                    cricleMatch.setName(cricleMatchName);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 // Tran dau trong vong bang
+
                 List<WebElement> tranDaus = webElement.findElements(By.cssSelector("table[class='imspo_mt__mit']"));
                 int index = 0;
                 for (WebElement tranDau : tranDaus) {
+                    match = new Match();
                     System.out.println("Tran dau: " + ++index);
                     List<WebElement> dois = tranDau.findElements(By.cssSelector("tr[class='imspo_mt__tr']"));
                     for (WebElement doi : dois) {
-                        avatarDoiBong = doi.findElement(By.cssSelector("td.imspo_mt__lgc > img.imso_btl__mh-logo"))
-                                .getAttribute("src");
-                        System.out.println("Src: " + avatarDoiBong);
-                        tenDoi = doi.findElement(By.cssSelector("div.ellipsisize > span")).getText();
-                        System.out.println("Ten doi: " + tenDoi);
-                        banThang = doi.findElement(By.cssSelector("div.imspo_mt__tt-w")).getText();
-                        System.out.println("Ban thang: " + banThang);
+                        team = new Team();
+                        team.setAvatar(doi.findElement(By.cssSelector("td.imspo_mt__lgc > img.imso_btl__mh-logo"))
+                                .getAttribute("src"));
+                        team.setName(doi.findElement(By.cssSelector("div.ellipsisize > span")).getText());
+                        team.setGoal(doi.findElement(By.cssSelector("div.imspo_mt__tt-w")).getText());
+                        match.getTeams().add(team);
                     }
-                    ketQua = tranDau.findElement(By.cssSelector(
+                    match.setResult(tranDau.findElement(By.cssSelector(
                             "div[class='imspo_mt__cm-s imspo_mt__ndl-p imso-medium-font imspo_mt__match-status']"))
-                            .getText();
-                    ngayDa = tranDau.findElement(By.cssSelector("div[class='imspo_mt__cmd'] > span")).getText();
-                    thoiGianVideo = tranDau.findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
-                            .findElement(By.cssSelector(" a > span")).getText();
-                    linkAnhXemTruoc = tranDau
-                            .findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
-                            .findElement(By.cssSelector(" a > img")).getAttribute("src");
-                    linkVideo = tranDau.findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
-                            .findElement(By.cssSelector("a")).getAttribute("href");
-
-                    System.out.println("ketQua: " + ketQua);
-                    System.out.println("ngayDa: " + ngayDa);
-                    System.out.println("linkAnhXemTruoc: " + linkAnhXemTruoc);
-                    System.out.println("thoiGianVideo: " + thoiGianVideo);
-                    System.out.println("linkAnhXemTruoc: " + linkAnhXemTruoc);
-                    System.out.println("linkVideo: " + linkVideo);
+                            .getText());
+                    match.setDay(tranDau.findElement(By.cssSelector("div[class='imspo_mt__cmd'] > span")).getText());
+                    match.setVideoTime(
+                            tranDau.findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
+                            .findElement(By.cssSelector(" a > span")).getText());
+                    match.setPhotoUrlPreview(
+                            tranDau.findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
+                            .findElement(By.cssSelector(" a > img")).getAttribute("src"));
+                    match.setVideoUrl(
+                            tranDau.findElement(By.cssSelector("div[class='imspo_mt__vr-tc imspo_mt__ndl-p']"))
+                            .findElement(By.cssSelector("a")).getAttribute("href"));
+                    cricleMatch.getMatchs().add(match);
                 }
+                cricleMatchs.add(cricleMatch);
             }
+            Gson gson = new Gson();
+            String json = gson.toJson(cricleMatchs);
+            System.out.println(json);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
