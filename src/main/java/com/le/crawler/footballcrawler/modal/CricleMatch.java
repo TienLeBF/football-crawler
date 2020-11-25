@@ -1,30 +1,46 @@
 package com.le.crawler.footballcrawler.modal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CricleMatch {
-    private String name;
-    private List<Match> matchs;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
-    public CricleMatch() {
-        this.matchs = new ArrayList<Match>();
-    }
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "cricleMatch")
+public class CricleMatch implements Serializable {
 
-    public String getName() {
-        return this.name;
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@XmlAttribute(name = "name")
+	private String name;
+	@XmlAttribute(name = "matchs")
+	private List<Match> matchs;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public CricleMatch() {
+		this.matchs = new ArrayList<Match>();
+	}
 
-    public List<Match> getMatchs() {
-        return this.matchs;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public void setMatchs(List<Match> matchs) {
-        this.matchs = matchs;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public List<Match> getMatchs() {
+		return this.matchs;
+	}
+
+	public void setMatchs(List<Match> matchs) {
+		this.matchs = matchs;
+	}
+
+	
 }

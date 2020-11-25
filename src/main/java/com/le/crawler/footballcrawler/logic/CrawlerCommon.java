@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import com.google.gson.Gson;
 import com.le.crawler.footballcrawler.modal.CricleMatch;
 import com.le.crawler.footballcrawler.modal.Match;
 import com.le.crawler.footballcrawler.modal.Team;
@@ -18,7 +17,7 @@ import com.le.crawler.footballcrawler.utils.SeleniumUtils;
 
 public class CrawlerCommon {
 
-    public static String process(String url) {
+    public static List<CricleMatch> process(String url) {
         // 1. vòng bảng - trong div id =
         // "liveresults-sports-immersive__updatable-league-matches" co class =
         // "OcbAbf"
@@ -173,10 +172,10 @@ public class CrawlerCommon {
                 }
                 cricleMatchs.add(cricleMatch);
             }
-
-            Gson gson = new Gson();
-            String json = gson.toJson(cricleMatchs);
-            return json;
+            return cricleMatchs;
+//            Gson gson = new Gson();
+//            String json = gson.toJson(cricleMatchs);
+//            return json;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

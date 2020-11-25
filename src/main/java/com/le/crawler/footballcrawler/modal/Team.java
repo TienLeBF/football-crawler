@@ -1,32 +1,48 @@
 package com.le.crawler.footballcrawler.modal;
 
-public class Team {
-    private String name;
-    private String avatar;
-    private String goal;
+import java.io.Serializable;
 
-    public String getName() {
-        return this.name;
-    }
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "team")
+public class Team implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@XmlAttribute(name = "name")
+	private String name;
+	@XmlAttribute(name = "avatar")
+	private String avatar;
+	@XmlAttribute(name = "goal")
+	private String goal;
 
-    public String getAvatar() {
-        return this.avatar;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getGoal() {
-        return this.goal;
-    }
+	public String getAvatar() {
+		return this.avatar;
+	}
 
-    public void setGoal(String goal) {
-        this.goal = goal;
-    }
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getGoal() {
+		return this.goal;
+	}
+
+	public void setGoal(String goal) {
+		this.goal = goal;
+	}
 
 }

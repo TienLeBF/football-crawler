@@ -1,14 +1,33 @@
 package com.le.crawler.footballcrawler.modal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Match {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "match")
+public class Match implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@XmlAttribute(name = "teams")
     List<Team> teams;
+	@XmlAttribute(name = "result")
     private String result;
+	@XmlAttribute(name = "day")
     private String day;
+	@XmlAttribute(name = "photoUrlPreview")
     private String photoUrlPreview;
+	@XmlAttribute(name = "videoUrl")
     private String videoUrl;
+	@XmlAttribute(name = "videoTime")
     private String videoTime;
 
     public Match() {
@@ -62,5 +81,6 @@ public class Match {
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
+    
 
 }
