@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.le.crawler.footballcrawler.logic.CrawlerPage1;
-import com.le.crawler.footballcrawler.modal.CricleMatch;
-import com.le.crawler.footballcrawler.modal.CricleMatchs;
+import com.le.crawler.footballcrawler.modal.match.CricleMatch;
+import com.le.crawler.footballcrawler.modal.match.CricleMatchs;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "crawler")

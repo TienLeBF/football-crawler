@@ -1,4 +1,4 @@
-package com.le.crawler.footballcrawler.modal;
+package com.le.crawler.footballcrawler.modal.match;
 
 import java.io.Serializable;
 import java.util.ArrayList;
