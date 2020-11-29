@@ -8,10 +8,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "matchs")
-public class Matchs {
+@XmlRootElement(name = "matchTab")
+public class MatchTab {
 
-	@XmlElement(name = "match")
+	@XmlElement(name = "matchs")
 	private List<GameGroup> matchs;
 
 	public List<GameGroup> getmatchs() {

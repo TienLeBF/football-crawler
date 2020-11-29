@@ -12,17 +12,17 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.google.gson.Gson;
 import com.le.crawler.footballcrawler.modal.leaderboard.LeaderBoard;
-import com.le.crawler.footballcrawler.modal.leaderboard.LeaderBoards;
+import com.le.crawler.footballcrawler.modal.leaderboard.LeaderBoardTab;
 import com.le.crawler.footballcrawler.modal.leaderboard.Player;
 import com.le.crawler.footballcrawler.modal.match.Game;
 import com.le.crawler.footballcrawler.modal.match.GameGroup;
-import com.le.crawler.footballcrawler.modal.match.Matchs;
+import com.le.crawler.footballcrawler.modal.match.MatchTab;
 import com.le.crawler.footballcrawler.modal.match.Team;
 import com.le.crawler.footballcrawler.modal.news.News;
-import com.le.crawler.footballcrawler.modal.news.NewsPage;
+import com.le.crawler.footballcrawler.modal.news.NewsTab;
 import com.le.crawler.footballcrawler.modal.page.Page;
 import com.le.crawler.footballcrawler.modal.standing.Group;
-import com.le.crawler.footballcrawler.modal.standing.Standings;
+import com.le.crawler.footballcrawler.modal.standing.StandingTab;
 import com.le.crawler.footballcrawler.utils.SeleniumUtils;
 
 public class CrawlerCommon {
@@ -59,7 +59,7 @@ public class CrawlerCommon {
 		}
 	}
 
-	public Matchs processMatch() {
+	public MatchTab processMatch() {
 		// 1. vòng bảng - trong div id =
 		// "liveresults-sports-immersive__updatable-league-matches" co class =
 		// "OcbAbf"
@@ -153,7 +153,7 @@ public class CrawlerCommon {
 				e.printStackTrace();
 			}
 			List<WebElement> vongBangs = this.driver.findElements(By.className("OcbAbf"));
-			Matchs matchs = new Matchs();
+			MatchTab matchs = new MatchTab();
 			Team team = new Team();
 			Game game = null;
 			GameGroup gameGroup = new GameGroup();
@@ -248,7 +248,7 @@ public class CrawlerCommon {
 		}
 	}
 
-	public NewsPage processNews() {
+	public NewsTab processNews() {
 		// 1. Xep hang trong the div co class = nM4ave
 		// 1.1 Tin trong div co class = HCUNre dbsr
 		// 1.1.1 Link tin div>a.href
@@ -263,7 +263,7 @@ public class CrawlerCommon {
 			// SCROLL UP DOWN
 			WebElement data = this.driver.findElement(By.className("x4NjEf"));
 			List<WebElement> eManyNews = data.findElements(By.cssSelector("div[class='HCUNre dbsr']"));
-			NewsPage newsPage = new NewsPage();
+			NewsTab newsPage = new NewsTab();
 			List<News> manyNews = new ArrayList<News>();
 			News news = null;
 			for (WebElement e : eManyNews) {
@@ -286,7 +286,7 @@ public class CrawlerCommon {
 		}
 	}
 
-	public Standings processStandings() {
+	public StandingTab processStandings() {
 
 		// 1. Thong tin trong the div co class = sWfpOe
 		// 1.1 GroupName trong div co class = fwXO9b XAPH9c
@@ -313,7 +313,7 @@ public class CrawlerCommon {
 			List<WebElement> eGroups = data.findElements(By.cssSelector("div[class='jXpA9e Ui5IUc']"));
 			List<WebElement> eTeams = null;
 			int index = 0;
-			Standings standings = new Standings();
+			StandingTab standings = new StandingTab();
 			List<Group> groups = new ArrayList<Group>();
 			Group group = null;
 			com.le.crawler.footballcrawler.modal.standing.Team team = null;
@@ -361,7 +361,7 @@ public class CrawlerCommon {
 		}
 	}
 
-	public LeaderBoards processLeaderboard() {
+	public LeaderBoardTab processLeaderboard() {
 
 		// 1. LeaderBoard trong div id = v3Iwj88yxmA__leaderboard class imso-ani tb_cbg
 		// v3Iwj88yxmA__leaderboard
@@ -380,7 +380,7 @@ public class CrawlerCommon {
 			JavascriptExecutor js = (JavascriptExecutor) this.driver;
 			// SCROLL UP DOWN
 			WebElement data = this.driver.findElement(By.id("v3Iwj88yxmA__leaderboard"));
-			LeaderBoards result = new LeaderBoards();
+			LeaderBoardTab result = new LeaderBoardTab();
 			List<LeaderBoard> leaders = new ArrayList<LeaderBoard>();
 			LeaderBoard leader = null;
 			Player player = null;
@@ -401,7 +401,7 @@ public class CrawlerCommon {
 					player.setCounts(eP.findElement(By.cssSelector("td[class='Rq9DQd']")).getText());
 					players.add(player);
 				}
-				leader.setPlayer(players);
+				leader.setPlayers(players);
 				leaders.add(leader);
 			}
 			result.setLeaderBoards(leaders);
@@ -423,39 +423,39 @@ public class CrawlerCommon {
 //             way to tab match -> already stay at this tab (-> click link li - data-tab_type = LEAGUE_MATCHES)
 //			Gson gson = new Gson();
 			long startMatchs = System.currentTimeMillis();
-			Matchs matchs = this.processMatch();
+			MatchTab matchs = this.processMatch();
 //			System.out.println(gson.toJson(matchs));
 //             way to tab match new -> click link li - data-tab_type = NEWS
 			long startNews = System.currentTimeMillis();
 			this.driver.findElement(By.cssSelector("li[data-tab_type='NEWS']")).click();
-			NewsPage newsPage = this.processNews();
+			NewsTab newsPage = this.processNews();
 //			System.out.println(gson.toJson(newsPage));
 //             way to tab ranking -> click link li - data-tab_type = STANDINGS
 //            SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(this.driver, 1000);
 			long startStanding = System.currentTimeMillis();
 			this.driver.findElement(By.cssSelector("li[data-tab_type='STANDINGS']")).click();
-			Standings standings = this.processStandings();
+			StandingTab standings = this.processStandings();
 //			System.out.println(gson.toJson(standings));
 			// way to tab tracking -> click link li - data-tab_type = LEADERBOARD
 //            SeleniumUtils.WAIT_LOAD_PAGE_COMPLETED(this.driver, 1000);
 			long startLeader = System.currentTimeMillis();
 			this.driver.findElement(By.cssSelector("li[data-tab_type='LEADERBOARD']")).click();
-			LeaderBoards leaderBoards = this.processLeaderboard();
+			LeaderBoardTab leaderBoards = this.processLeaderboard();
 //			System.out.println(gson.toJson(leaderboards));
 			long convertJson = System.currentTimeMillis();
 			Page page = new Page();
 			page.setMatchs(matchs);
-			page.setNewsPage(newsPage);
-			page.setLeaderBoards(leaderBoards);
-			page.setStandings(standings);
+			page.setNewsTab(newsPage);
+			page.setLeaderBoardTab(leaderBoards);
+			page.setStandingTab(standings);
 			System.out.println(new Gson().toJson(page));
 			long end = System.currentTimeMillis();
 			System.out.println("=============TIMES LINE====================");
 			System.out.println(String.format("Opensession = %f %s",(startMatchs - start)/1000.0, "s"));
-			System.out.println(String.format("Crawl Matchs = %f %s", (startNews - startMatchs)/1000.0, "s"));
-			System.out.println(String.format("Crawl News = %f %s", (startStanding - startNews)/1000.0, "s"));
-			System.out.println(String.format("Crawl Standing = %f %s", (startLeader - startStanding)/1000.0, "s"));
-			System.out.println(String.format("Crawl LeaderBoard = %f %s", (convertJson - startLeader)/1000.0, "s"));
+			System.out.println(String.format("Crawl MatchTab = %f %s", (startNews - startMatchs)/1000.0, "s"));
+			System.out.println(String.format("Crawl NewsTab = %f %s", (startStanding - startNews)/1000.0, "s"));
+			System.out.println(String.format("Crawl StandingTab = %f %s", (startLeader - startStanding)/1000.0, "s"));
+			System.out.println(String.format("Crawl LeaderBoardTab = %f %s", (convertJson - startLeader)/1000.0, "s"));
 			System.out.println(String.format("Crawl ConvertJson = %f %s", (end - convertJson)/1000.0, "s"));
 			System.out.println("=============END TIMES LINE================");
 			return page;
@@ -471,6 +471,6 @@ public class CrawlerCommon {
 		String url1 = "https://www.google.com/search?sxsrf=ALeKk02SuH34OswVCiUwOVJjOM5dhEDXwQ%3A1605506341928&ei=JRWyX7KNOIaJmAWzn7eoBQ&q=africa+cup+2019&oq=afr&gs_lcp=CgZwc3ktYWIQARgAMgQIIxAnMgQIIxAnMgQIIxAnMgcIABDJAxBDMgQILhBDMgQIABBDMgQIABBDMgQIABBDMgIIADICCAA6BwgjEMkDECc6BwguELEDEEM6CAgAELEDEIMBOg0ILhCxAxCDARAUEIcCOgoILhCxAxAUEIcCOgUIABCxA1C-C1i-C2DQEmgAcAB4AIABaYgBzwGSAQMwLjKYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=psy-ab#sie=lg;/m/0r3tvzw;2;/m/01l5zn;mt;fp;1;;";
 		String url2 = "https://www.google.com/search?sxsrf=ALeKk02nHRdKjmNiuHkno7qiEAgKx_evpQ%3A1605265066917&ei=qmauX8a7N8uB-Qa9k5DoBw&q=afc+champion+league&oq=AFC&gs_lcp=CgZwc3ktYWIQARgAMgQIIxAnMggILhDJAxCRAjIFCAAQkQIyBAgAEEMyBAguEEMyBAgAEEMyBAguEEMyBAgAEEMyBwgAEBQQhwIyCggAELEDEIMBEAo6BwgAEMkDEEM6AgguOgsILhCxAxDHARCjAjoFCAAQsQM6CAgAELEDEIMBOg0ILhCxAxDHARCjAhBDOgoILhDHARCjAhBDOgsILhCxAxDHARCvAToKCC4QxwEQrwEQQzoCCAA6CAguEMcBEK8BOgcIABCxAxBDOgcILhCxAxBDUIA-WPVXYMpkaANwAXgAgAGaAYgBvQaSAQMwLjaYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=psy-ab#sie=lg;/g/11fk8dhgv3;2;/m/042gf2;mt;fp;1;;";
 		new CrawlerCommon().process(url1);
-		new CrawlerCommon().process(url2);
+//		new CrawlerCommon().process(url2);
 	}
 }

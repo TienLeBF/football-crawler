@@ -2,52 +2,63 @@ package com.le.crawler.footballcrawler.modal.page;
 
 import java.io.Serializable;
 
-import com.le.crawler.footballcrawler.modal.leaderboard.LeaderBoards;
-import com.le.crawler.footballcrawler.modal.match.Matchs;
-import com.le.crawler.footballcrawler.modal.news.NewsPage;
-import com.le.crawler.footballcrawler.modal.standing.Standings;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import com.le.crawler.footballcrawler.modal.leaderboard.LeaderBoardTab;
+import com.le.crawler.footballcrawler.modal.match.MatchTab;
+import com.le.crawler.footballcrawler.modal.news.NewsTab;
+import com.le.crawler.footballcrawler.modal.standing.StandingTab;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "page")
 public class Page implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Matchs matchs;
-	private NewsPage newsPage;
-	private LeaderBoards leaderBoards;
-	private Standings standings;
+	@XmlAttribute(name = "matchs")
+	private MatchTab matchs;
+	@XmlAttribute(name = "newsTab")
+	private NewsTab newsTab;
+	@XmlAttribute(name = "leaderBoardTab")
+	private LeaderBoardTab leaderBoardTab;
+	@XmlAttribute(name = "standingTab")
+	private StandingTab standingTab;
 
-	public Matchs getMatchs() {
+	public MatchTab getMatchs() {
 		return matchs;
 	}
 
-	public void setMatchs(Matchs matchs) {
+	public void setMatchs(MatchTab matchs) {
 		this.matchs = matchs;
 	}
 
-	public NewsPage getNewsPage() {
-		return newsPage;
+	public NewsTab getNewsTab() {
+		return newsTab;
 	}
 
-	public void setNewsPage(NewsPage newsPage) {
-		this.newsPage = newsPage;
+	public void setNewsTab(NewsTab newsTab) {
+		this.newsTab = newsTab;
 	}
 
-	public LeaderBoards getLeaderBoards() {
-		return leaderBoards;
+	public LeaderBoardTab getLeaderBoardTab() {
+		return leaderBoardTab;
 	}
 
-	public void setLeaderBoards(LeaderBoards leaderBoards) {
-		this.leaderBoards = leaderBoards;
+	public void setLeaderBoardTab(LeaderBoardTab leaderBoardTab) {
+		this.leaderBoardTab = leaderBoardTab;
 	}
 
-	public Standings getStandings() {
-		return standings;
+	public StandingTab getStandingTab() {
+		return standingTab;
 	}
 
-	public void setStandings(Standings standings) {
-		this.standings = standings;
+	public void setStandingTab(StandingTab standingTab) {
+		this.standingTab = standingTab;
 	}
 
 }
