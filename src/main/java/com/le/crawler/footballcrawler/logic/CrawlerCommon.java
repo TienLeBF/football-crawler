@@ -39,7 +39,7 @@ public class CrawlerCommon {
 
 			System.setProperty("webdriver.chrome.driver", "/home/le/seleniumdriver/chromedriver");
 			ChromeOptions op = new ChromeOptions();
-			// op.addArguments("--headless");
+			 op.addArguments("--headless");
 			this.driver = new ChromeDriver(op);
 			// info crawl
 			this.driver.manage().window().maximize();
