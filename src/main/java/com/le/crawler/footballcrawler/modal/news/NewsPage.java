@@ -2,7 +2,7 @@ package com.le.crawler.footballcrawler.modal.news;
 
 import java.util.List;
 
-public class ManyNews {
+public class NewsPage {
     private List<News> manyNews;
 
     public List<News> getManyNews() {

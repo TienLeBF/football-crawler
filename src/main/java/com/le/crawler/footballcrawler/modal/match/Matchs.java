@@ -8,18 +8,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "cricleMatchs")
-public class CricleMatchs {
+@XmlRootElement(name = "matchs")
+public class Matchs {
 
-	@XmlElement(name = "cricleMatch")
-	private List<CricleMatch> cricleMatchs;
+	@XmlElement(name = "match")
+	private List<GameGroup> matchs;
 
-	public List<CricleMatch> getCricleMatchs() {
-		return cricleMatchs;
+	public List<GameGroup> getmatchs() {
+		return matchs;
 	}
 
-	public void setCricleMatchs(List<CricleMatch> cricleMatchs) {
-		this.cricleMatchs = cricleMatchs;
+	public void setmatchs(List<GameGroup> matchs) {
+		this.matchs = matchs;
 	}
 
 }

@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.le.crawler.footballcrawler.logic.CrawlerPage1;
-import com.le.crawler.footballcrawler.modal.match.CricleMatch;
-import com.le.crawler.footballcrawler.modal.match.CricleMatchs;
+import com.le.crawler.footballcrawler.modal.match.GameGroup;
+import com.le.crawler.footballcrawler.modal.match.Matchs;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "crawler")
@@ -19,11 +19,11 @@ import com.le.crawler.footballcrawler.modal.match.CricleMatchs;
 public class CrawlerResource {
 	@GET
 	@Produces("application/json")
-	public CricleMatchs getAllCricleMatchs() {
-		CricleMatchs cricleMatchs = new CricleMatchs();
+	public Matchs getAllCricleMatchs() {
+		Matchs cricleMatchs = new Matchs();
 		
-		List<CricleMatch> data =  new CrawlerPage1().process();
-		cricleMatchs.setCricleMatchs(data);
+		List<GameGroup> data =  new CrawlerPage1().process();
+		cricleMatchs.setmatchs(data);
 		return cricleMatchs;
 	}
 }

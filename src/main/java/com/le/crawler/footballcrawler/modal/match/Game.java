@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "match")
-public class Match implements Serializable {
+@XmlRootElement(name = "game")
+public class Game implements Serializable {
 	
 	/**
 	 * 
@@ -30,7 +30,7 @@ public class Match implements Serializable {
 	@XmlAttribute(name = "videoTime")
     private String videoTime;
 
-    public Match() {
+    public Game() {
         this.teams = new ArrayList<Team>();
     }
 

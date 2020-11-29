@@ -2,7 +2,7 @@ package com.le.crawler.footballcrawler.modal.standing;
 
 import java.util.List;
 
-public class Groups {
+public class Standings {
 
     private List<Group> groups;
 
